@@ -6,7 +6,10 @@
 
 ## Learning Objectives
 
-* FILL IN
+* Learn the basics about Swift's structs
+* Create your own structs
+* Understand the difference between reference and value types when assigning each to variables and constants
+* Understand how to change a struct's properties
 
 ## Structs
 
