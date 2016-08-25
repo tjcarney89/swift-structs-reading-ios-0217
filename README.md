@@ -46,7 +46,7 @@ jim.goForARun()
 
 In Swift, structs are very similar. They are data types that have properties, methods, and initializers. In fact, you declare them almost the same as you do a class, except you use the `struct` keyword instead of `class`. Here's how you could define a `Person` struct:
 
-```
+```swift
 struct Person {
     let firstName: String
     let lastName: String
@@ -80,7 +80,7 @@ Wait, reference types? Value types? What does that gobbledygook mean? Well, it's
 
 First, let's go back to our example of a `Person` _class_. This time, though, make the properties variables, so that you can change them after you have initialized the class:
 
-```
+```swift
 class Person {
     var firstName: String
     var lastName: String
