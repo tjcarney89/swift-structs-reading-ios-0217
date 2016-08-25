@@ -3,16 +3,82 @@
 ![VeronicaRoth](http://i.imgur.com/pndJPoU.jpg)  
 
 > Becoming fearless isn't the point. That's impossible. It's learning how to control your fear, and how to be free from it. -[Veronica Roth](https://en.wikipedia.org/wiki/Veronica_Roth)
- 
 
 ## Learning Objectives
 
-* 
+* Learn the basics about Swift's structs
+* Create your own structs
+* Understand the difference between reference and value types when assigning each to variables and constants
+* Understand how to change a struct's properties
 
+## Structs
 
-## Outline / Notes
+In the last few lessons, you've learned how you can use classes to make your own data types in Swift, complete with their own properties and behaviors (known formally as _methods_). As a reminder, take a look at how you might create a class to represent a `Person`. It would probably look something like this:
 
-*  What can do with with a class?
+```swift
+class Person {
+    let firstName: String
+    let lastName: String
+    var fullName: String {
+        return "\(firstName) \(lastName)"
+    }
+
+    init(firstName: String, lastName: String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+
+    func goForARun() {
+        print("I love running!")
+    }
+}
+```
+
+You can create instances of that class pretty easily:
+
+```swift
+let jim = Person(firstName: "Jimbo", lastName: "Guiseppe")
+print(jim.fullName)
+// prints "Jimbo Guiseppe"
+jim.goForARun()
+// prints "I love running!"
+```
+
+In Swift, structs are very similar. They are data types that have properties, methods, and initializers. In fact, you declare them almost the same as you do a class, except you use the `struct` keyword instead of `class`. Here's how you could define a `Person` struct:
+
+```swift
+struct Person {
+    let firstName: String
+    let lastName: String
+    var fullName: String {
+        return "\(firstName) \(lastName)"
+    }
+
+    func goForARun() {
+        print("I love running!")
+    }
+}
+```
+
+And here's how you could create an instance of your `Person` struct:
+
+```swift
+let jim2 = Person(firstName: "Jimbo", lastName: "Guiseppe")
+print(jim.fullName)
+// prints "Jimbo Guiseppe"
+jim.goForARun()
+// prints "I love running!"
+```
+
+Not much different from a class, huh? The biggest difference you may have noticed is that the `Person` struct does not have an initializer. Unlike classes, you don't _have_ to define an initializer for a struct. If you don't define one, a default one will be created that simply takes all stored (not computed) properties as parameters, and assigns those parameters to the appropriate property. You _can_ define your own initializer, though, if you want it to do more than that—just like a class.
+
+So why use a struct instead of a class? Are default initializers the only benefit structs have?
+
+Nope! Structs behave a bit differently than classes. Classes are _reference_ types, whereas structs are _value_ types.
+
+Wait, reference types? Value types? What does that gobbledygook mean? Well, it's probably best to illustrate with an example.
+
+First, let's go back to our example of a `Person` _class_. This time, though, make the properties variables, so that you can change them after you have initialized the class:
 
 ```swift
 class Person {
@@ -21,44 +87,48 @@ class Person {
     var fullName: String {
         return "\(firstName) \(lastName)"
     }
-    
+
     init(firstName: String, lastName: String) {
         self.firstName = firstName
         self.lastName = lastName
     }
-    
-    func goForARun() {
-        // begin running!
-    }
 }
 ```
 
-```swift
-let jim = Person(firstName: "Jimbo", lastName: "Giuseppe")
-
-print(jim.fullName)
-// Jimbo Giuseppe
-
-jim.goForARun()
-```
-
-
-We can,
-* Define properties to store values
-* Define methods to provide functionality
-* Define initializers to set up their initial state
-
-We can do this exact same thing with Structures. They both have many things in common, some of those things are listed above.
-
-Here's how you create a `struct`
+Now, create an instance of this `Person` called `person1`, then create a variable called `person2` and assign `person1` to it, like this:
 
 ```swift
-struct Person {
-    // TODO: Define a person
-}
+var person1 = Person(firstName: "Luke", lastName: "Skywalker")
+var person2 = person1
 ```
 
-That's it. Instead of using the keyword `class` when creating your new type, you use the keyword `struct`. So lets complete the implementation of a `Person` as a `struct`.
+Now try printing out their full names:
+
+```swift
+print(person1.fullName)
+// prints "Luke Skywalker"
+print(person2.fullName)
+// prints "Luke Skywalker"
+```
+
+"Luke Skywalker" is printed twice. Pretty much what you expected, right? Now, try changing `person1`'s `firstName` and `lastName`, and then printing the `fullName`s of both `person1` and `person2` again:
+
+```swift
+person1.firstName = "Han"
+person1.lastName = "Solo"
+print(person1.fullName)
+// prints "Han Solo"
+print(person2.fullName)
+// prints "Han Solo"
+```
+
+"Han Solo" is printed twice! Is this what you expected?
+
+When you instantiate an object, that instance is stored _once_ in memory. `person1` _points_ to that instance in memory. When you assign `person1` to `person2`, `person2` points to that same instance! Which means that if you change a property in `person1`, that change will be reflected in `person2`—because they are pointing to the same object!
+
+Think of it like a house. If I tell you where I live, I can say, "I live at 292 West 10th Street." I can also tell you, "I live in the blue house on the corner of West 10th Street and 13th Avenue." It's the same house! I'm just describing the location in two ways. If I paint my house red, then both places will be a red house.
+
+Structs are a bit different. Structs are value types, so when you assign the value of one struct to another variable (or constant), it gets _copied_ in memory, and each variable (or constant) point to _different_ instances of that struct. Let's see this in action by first creating a `Person` struct again. This one will also have variable properties.
 
 ```swift
 struct Person {
@@ -67,181 +137,147 @@ struct Person {
     var fullName: String {
         return "\(firstName) \(lastName)"
     }
-    
-    init(firstName: String, lastName: String) {
-        self.firstName = firstName
-        self.lastName = lastName
-    }
-    
-    func goForARun() {
-        // begin running!
-    }
 }
 ```
 
+Now, repeat the previous exercise by creating a new instance of this `Person` struct, then assign it to another variable, then print out the full names of each variable:
+
 ```swift
-
-let jim = Person(firstName: "Jimbo", lastName: "Giuseppe")
-
-print(jim.fullName)
-// Jimbo Giuseppe
-
-jim.goForARun()
+var hero1 = PersonValue(firstName: "Luke", lastName: "Skywalker")
+var hero2 = hero1
+print(hero1.fullName)
+// prints "Luke Skywalker"
+print(hero2.fullName)
+// prints "Luke Skywalker"
 ```
 
-So then what's the difference?
+Once again, you'll see "Luke Skywalker" printed to the console twice.
 
-Structures are _value types_. A _value type_ is a type whose value is _copied_ when it is assigned to a variable or constant, or when it is passed to a function.
-
-What does that mean? Lets see.
+Now, change the first name of `hero1` to "Han" and the last name of `hero1` to "Solo", and print each variable's full name again. What do you expect to see in the console this time?
 
 ```swift
-class Dog {
-    var name: String
-    
-    init(name: String) { self.name = name }
-}
-
-struct Cat {
-    var name: String
-    
-    init(name: String) { self.name = name }
-}
+hero1.firstName = "Han"
+hero1.lastName = "Solo"
+print(hero1.fullName)
+// prints "Han Solo"
+print(hero2.fullName)
+// prints "Luke Skywalker"
 ```
 
-Here we have a `Dog` type which is a class and a `Cat` type which is a struct. Lets see how they both behave.
+This time, you see both "Han Solo" and "Luke Skywalker" printed to the console. Why? Well, `hero1` and `hero2` both point to different copies of the `Person` struct. Changing `hero1`'s properties does not affect the properties of `hero2`, because they are different instances!
+
+## Coffee Talk
+
+Let's talk about coffee for a second. Here's a pretty simple class for representing a mug of coffee:
 
 ```swift
-let ralph = Dog(name: "Ralph")
-let hanna = Cat(name: "Hanna")
-```
-
-```swift
-var sameDog = ralph
-
-sameDog.name = "Biscuit"
-
-print(sameDog.name)
-// prints "Biscuit"
-
-print(ralph.name)
-// prints "Biscuit"
-```
-
-Here we created a new variable called `sameDog` and assigned it a value (using the assignment operator, `=`). What value did we assign to this variable? Well, we assigned it the value which was assigned to `ralph` which was an instance of a `Dog` which had its name set to "Ralph".
-
-
-When assigning a value to a variable or constant like this, if what's on the right side of the assignment operator is a class (like this example), we are making reference to that one instance of `Dog`. 
-
-
-Both variables make reference to the one instance of `Dog`. That is reference semantics. Whatever we change with a variable `ralph` will also change the variable `sameDog` and vice-versa. That is because they each don't get their own unique copy, the variable is referring to the same instance.
-
-Lets try that with a struct.
-
-```swift
-var diffCat = hanna
-
-diffCat.name = "Garfield"
-
-print(diffCat.name)
-// prints "Garfield
-
-print(hanna.name)
-// prints "Hanna"
-```
-
-Here we created a new variable called `diffCat` and assigned it a value. We assigned it the value which was originally assigned to the `hanna` variable. But unlike classes, we aren't making reference to this one single instance of `Dog`, here we are making a copy of the `Cat` instance. We have our own unique copy stored within the `diffCat` variable. So, if we were to change `diffCat`'s name (like we did), it's changing its own copy thus unaffecting `hanna`'s name property.
-
-That is what is known as value semanatics. Structs are _value types_. 
-
-I like the idea of showing them another example of Class vs Struct by using the cup of coffee as an example.
-
-```swift
-class Cup {
+class Mug {
     var amountOfCoffee: Double = 0.0
 }
-
-func fillCup(cup: Cup) {
-    cup.amountOfCoffee = 10
-}
-
-let mikesCup = Cup()
-
-fillCup(mikesCup)
-
-mikesCup.amountOfCoffee // 10
 ```
 
-If we were to change the `Cup` to be a struct instead of a class, we would be met with the following error:
-
-![](http://i.imgur.com/NG5U7ZK.png)
-
-I think at this point, we need to discuss how even though an instance of a class is created with the `let` keyword, we can still change its properties (if those properties are declared with `var`). But if we were to declare an instance of a struct with the `let` keyword, we would be unable to change **any** of its properties, even if those properties were declared with the `var` keyword.
-
-So how do we fix that?
+An empty mug of coffee is pretty useless, so here's a function to fill it up:
 
 ```swift
-struct Cup {
-    var amountOfCoffee: Double = 0.0
+func fillMug(mug: Mug) {
+    mug.amountOfCoffee = 10.0
 }
-
-func fillCup(cup: Cup) {
-    var newCup = cup
-    newCup.amountOfCoffee = 10
-}
-
-let mikesCup = Cup()
-
-fillCup(mikesCup)
-
-mikesCup.amountOfCoffee // 0
 ```
 
-![](http://i.imgur.com/0aQBsZW.gif)
-
-We should instead make this an instance method on the struct and not a global function. Because we really want to be able to fill our own cup.
+And now some code to fill 'er up:
 
 ```swift
-struct Cup {
-    var amountOfCoffee: Double = 0.0
-    
-    mutating func fillCup() {
-        amountOfCoffee = 10
-    }
-}
-
-var mikesCup = Cup()
-
-print(mikesCup.amountOfCoffee)
+let myMug = Mug()
+print(myMug.amountOfCoffee)
 // prints "0.0"
-
-mikesCup.fillCup()
-
-print(mikesCup.amountOfCoffee)
+fillMug(myMug)
+print(myMug.amountOfCoffee)
 // prints "10.0"
 ```
 
-I think we then need to talk about the `mutating` keyword at this point and how it pertains to functions on structs that within their implementation mutate or change any of its own instance properties (like our example here). Classes aren't required to use the `mutating` keyword.
+As you probably expected, the code above first prints "0.0" to the console, then "10.0".
 
-If we were to change `mikesCup` to be a constant (declaring it with the `let` keyword), would this code run?
+But wait... `myMug` is a constant, so how can you change the property? When it comes to classes, `myMug` being constant simply means you can't assign `myMug` to another instance—but you can still change its properties, because the `Mug` class is a _reference_ type. In other words, you can't change what `myMug` _points_ to, but you can change its _contents_.
 
-The answer is no.
+Let's try to do the same thing with a struct. First, a simple `Mug` struct, and its accompanying `fillMug()` function:
 
-![](http://i.imgur.com/25YnpDr.png)
+```swift
+struct Mug {
+    var amountOfCoffee: Double = 0.0
+}
 
-Do we talk about further differences between classes and structs here? Meh, I'm not really sure.
-
-```
-* Inheritance enables one class to inherit the characteristics of another.
-* Type casting enables you to check and interpret the type of a class instance at runtime.
-* Deinitializers enable an instance of a class to free up any resources it has assigned.
-* Reference counting allows more than one reference to a class instance.”
-
-Excerpt From: Apple Inc. The Swift Programming Language (Swift 2.2) iBooks. 
+func fillMug(mug: Mug) {
+    mug.amountOfCoffee = 10.0
+}
 ```
 
-I think we should mention that `Enum`'s are also value types (like Structs). 
+Wait...that doesn't even compile! If you try to write that code, you'll get an error stating that "'mug' is a 'let' constant."
 
- 
+![Mug is a let constant](https://s3.amazonaws.com/learn-verified/mug-let-constant.png)
+
+What's going on? Remember how structs are _value_ types, so changing the value of a property doesn't affect other copies of that struct? When you pass a struct into a function, that function receives a _copy_ of the struct. Changing that copy's properties won't affect anything outside of that function (it's a copy, after all), so Swift won't even bother to let you do that.
+
+In order to change the properties of a struct, you need to make `fillCup()` a method. You could modify the `Mug` struct to look like this:
+
+```swift
+struct Mug {
+    var amountOfCoffee: Double = 0.0
+
+    func fillMug() {
+        amountOfCoffee = 10.0
+    }
+}
+```
+
+Oy...we're still getting an error here, though.
+
+![self is immutable](https://s3.amazonaws.com/learn-verified/mug-property-constant.png)
+
+"Self is immutable"? What does _that_ mean?
+
+In case you missed it before, structs are _value_ types. Changes in properties are not reflected on _copies_ of that struct, so by default Swift doesn't even allow instances of a struct to modify its own properties.
+
+So what, you're just hosed? Doomed to live a caffeine-free life?
+
+Not exactly. You _can_ change properties within a struct's methods if you mark them with the `mutating` keyword:
+
+```swift
+struct Mug {
+    var amountOfCoffee: Double = 0.0
+
+    mutating func fillMug() {
+        amountOfCoffee = 10.0
+    }
+}
+```
+
+Now you're free to fill up your mug:
+
+```swift
+var myMug1 = Mug()
+print(myMug1.amountOfCoffee)
+// prints "0.0"
+myMug1.fillMug()
+print(myMug1.amountOfCoffee)
+// prints "10.0"
+```
+
+What if you create a `Mug` constant?
+
+```swift
+
+let myMug2 = Mug()
+myMug2.fillMug()
+```
+
+Nope! You can't do that.
+
+![Constant Mug](https://s3.amazonaws.com/learn-verified/mug-constant.png)
+
+Unlike classes, a _constant_ struct's properties cannot be changed—not from outside the struct, not even from within the struct's own methods, even if they're marked as `mutating`. Once a struct is constant, it is _constant_. It can't change.
+
+Structs aren't the only value types in Swift: Enums are value types, too. You'll actually encounter value types quite a bit. Many of Swift's core data structures, including strings, arrays, and dictionaries, are structs, too.
+
+As you become more accustomed to Swift, you'll start to figure out when you should use classes and when you should use structs. For right now, it's generally easier to favor structs over classes. As you grow as a Swift programmer, though, you'll find many uses for both.
 
 <a href='https://learn.co/lessons/StructR' data-visibility='hidden'>View this lesson on Learn.co</a>
