@@ -4,12 +4,16 @@
 
 > Becoming fearless isn't the point. That's impossible. It's learning how to control your fear, and how to be free from it. -[Veronica Roth](https://en.wikipedia.org/wiki/Veronica_Roth)
 
+## Overview
+
+In this lesson. we'll cover the basics about Swift's structs. 
+
 ## Learning Objectives
 
-* Learn the basics about Swift's structs
-* Create your own structs
-* Understand the difference between reference and value types when assigning each to variables and constants
-* Understand how to change a struct's properties
+* Create and describe the syntax of structs
+* Distinguish structs from classes
+* Explain the difference between reference and value types when assigning each to variables and constants
+* Change a struct's properties
 
 ## Structs
 
