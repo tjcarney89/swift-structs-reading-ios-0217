@@ -147,7 +147,7 @@ struct Person {
 Now, repeat the previous exercise by creating a new instance of this `Person` struct, then assign it to another variable, then print out the full names of each variable:
 
 ```swift
-var hero1 = PersonValue(firstName: "Luke", lastName: "Skywalker")
+var hero1 = Person(firstName: "Luke", lastName: "Skywalker")
 var hero2 = hero1
 print(hero1.fullName)
 // prints "Luke Skywalker"
