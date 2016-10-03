@@ -221,7 +221,7 @@ Wait...that doesn't even compile! If you try to write that code, you'll get an e
 
 What's going on? Remember how structs are _value_ types, so changing the value of a property doesn't affect other copies of that struct? When you pass a struct into a function, that function receives a _copy_ of the struct. Changing that copy's properties won't affect anything outside of that function (it's a copy, after all), so Swift won't even bother to let you do that.
 
-In order to change the properties of a struct, you need to make `fillCup()` a method. You could modify the `Mug` struct to look like this:
+In order to change the properties of a struct, you need to make `fillMug()` a method. You could modify the `Mug` struct to look like this:
 
 ```swift
 struct Mug {
@@ -285,3 +285,5 @@ Structs aren't the only value types in Swift: Enums are value types, too. You'll
 As you become more accustomed to Swift, you'll start to figure out when you should use classes and when you should use structs. For right now, it's generally easier to favor structs over classes. As you grow as a Swift programmer, though, you'll find many uses for both.
 
 <a href='https://learn.co/lessons/StructR' data-visibility='hidden'>View this lesson on Learn.co</a>
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/swift-structs-reading'>Swift Structs Reading</a> on Learn.co and start learning to code for free.</p>
