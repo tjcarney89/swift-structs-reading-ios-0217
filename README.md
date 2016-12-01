@@ -68,7 +68,7 @@ And here's how you could create an instance of your `Person` struct:
 
 ```swift
 let jim2 = Person(firstName: "Jimbo", lastName: "Guiseppe")
-print(jim.fullName)
+print(jim2.fullName)
 // prints "Jimbo Guiseppe"
 jim.goForARun()
 // prints "I love running!"
